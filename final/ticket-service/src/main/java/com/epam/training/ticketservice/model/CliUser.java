@@ -9,8 +9,13 @@ public class CliUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     private String username;
+
     private String password;
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private CliUserRole cliUserRole;
 
     public long getId() {

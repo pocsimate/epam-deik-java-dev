@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -26,7 +27,7 @@ public class CliUserDetailsService implements UserDetailsService {
             User.UserBuilder userBuilder = User.builder();
             userBuilder
                     .username(cliUser.get().getUsername())
-                    .password(cliUser.get().getPassword());
+                    .password(new BCryptPasswordEncoder().encode(cliUser.get().getPassword()));
 
              if (cliUser.get().getCliUserRole().equals(CliUserRole.ADMIN)) {
                  userBuilder.roles("USER", "ADMIN");
