@@ -1,5 +1,6 @@
 package com.epam.training.ticketservice.service;
 
+import com.epam.training.ticketservice.exception.UserAlreadyExistsException;
 import com.epam.training.ticketservice.model.CliUser;
 import com.epam.training.ticketservice.model.CliUserRole;
 import com.epam.training.ticketservice.repository.CliUserRepository;
@@ -14,20 +15,33 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class CliUserDetailsService implements UserDetailsService {
+public class CliUserService implements UserDetailsService {
 
     @Autowired
     CliUserRepository cliUserRepository;
 
+    public void registerUser(String username, String password){
+        if (getUserByUsername(username).isPresent()){
+            throw new UserAlreadyExistsException(username);
+        } else {
+            CliUser cliUser = new CliUser(username, password);
+            cliUserRepository.save(cliUser);
+        }
+    }
+
+    public Optional<CliUser> getUserByUsername(String username){
+        return cliUserRepository.findByUsername(username);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<CliUser> cliUser = cliUserRepository.findByUsername(username);
+        Optional<CliUser> cliUser = getUserByUsername(username);
 
         if (cliUser.isPresent()) {
             User.UserBuilder userBuilder = User.builder();
             userBuilder
                     .username(cliUser.get().getUsername())
-                    .password(new BCryptPasswordEncoder().encode(cliUser.get().getPassword()));
+                    .password(cliUser.get().getPassword());
 
              if (cliUser.get().getCliUserRole().equals(CliUserRole.ADMIN)) {
                  userBuilder.roles("USER", "ADMIN");

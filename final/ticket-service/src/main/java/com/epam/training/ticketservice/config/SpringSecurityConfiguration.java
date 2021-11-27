@@ -1,6 +1,6 @@
 package com.epam.training.ticketservice.config;
 
-import com.epam.training.ticketservice.service.CliUserDetailsService;
+import com.epam.training.ticketservice.service.CliUserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,7 +15,7 @@ public class SpringSecurityConfiguration {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new CliUserDetailsService();
+        return new CliUserService();
     }
 
     @Bean

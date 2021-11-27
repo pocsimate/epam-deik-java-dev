@@ -16,7 +16,15 @@ public class CliUser {
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    private CliUserRole cliUserRole;
+    private CliUserRole cliUserRole = CliUserRole.USER;
+
+    public CliUser(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public CliUser() {
+    }
 
     public long getId() {
         return id;
