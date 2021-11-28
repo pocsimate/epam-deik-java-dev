@@ -40,7 +40,7 @@ public class UserCommandHandler {
             SecurityContextHolder.getContext().setAuthentication(result);
             return "Authentication success";
         } catch (AuthenticationException e) {
-            return e.getMessage();
+            return "Login failed due to incorrect credentials";
         }
     }
 }
