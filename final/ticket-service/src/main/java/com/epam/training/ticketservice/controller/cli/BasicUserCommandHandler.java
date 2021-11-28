@@ -11,9 +11,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellOption;
+
+import java.util.Objects;
 
 @ShellComponent
-public class UserCommandHandler {
+public class BasicUserCommandHandler {
 
     @Autowired
     CliUserService cliUserService;
@@ -22,7 +25,7 @@ public class UserCommandHandler {
     AuthenticationManager authenticationManager;
 
     @ShellMethod(value = "Register user", key = "sign up")
-    public String signup(String username, String password){
+    public String signUp(String username, String password){
         try {
             cliUserService.registerUser(username, new BCryptPasswordEncoder().encode(password));
             return "Registered successfully";
@@ -32,9 +35,20 @@ public class UserCommandHandler {
     }
 
     @ShellMethod(value = "Login user", key = "sign in")
-    public String login(String username, String password){
-        Authentication request = new UsernamePasswordAuthenticationToken(username, password);
+    public String signIn(@ShellOption("privileged") boolean privileged, String username, String password){
 
+        if (privileged) {
+            System.out.println("privileged command");
+        }
+
+        System.out.println("pw: " + password + ", user: " + username + ", privileged: " + privileged);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!Objects.isNull(authentication)) {
+            return "Already signed in. Sign out first";
+        }
+
+        Authentication request = new UsernamePasswordAuthenticationToken(username, password);
         try {
             Authentication result = authenticationManager.authenticate(request);
             SecurityContextHolder.getContext().setAuthentication(result);

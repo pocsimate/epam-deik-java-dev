@@ -1,4 +1,4 @@
-package com.epam.training.ticketservice.controller.cli;
+package com.epam.training.ticketservice.controller.cli.secured;
 
 import com.epam.training.ticketservice.exception.MovieAlreadyExistsException;
 import com.epam.training.ticketservice.model.movie.Movie;
@@ -8,12 +8,11 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 @ShellComponent
-public class MovieCommandHandler {
+public class AdminMovieCommandHandler {
 
     @Autowired
     MovieService movieService;
 
-    //TODO itt hagytam abba (insert elég buta)
     @ShellMethod(value = "Create new movie", key = "create movie")
     public String createMovie(String title, String category, int length){
         try{
