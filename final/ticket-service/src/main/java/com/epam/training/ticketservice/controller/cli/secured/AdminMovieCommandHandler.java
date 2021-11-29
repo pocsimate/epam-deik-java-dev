@@ -45,7 +45,7 @@ public class AdminMovieCommandHandler {
     }
 
     @ShellMethod(value = "Delete existing movie", key = "delete movie")
-    public String editMovie(String title) {
+    public String deleteMovie(String title) {
         try {
             movieService.deleteMovie(title);
             return "Movie deleted successfully";
