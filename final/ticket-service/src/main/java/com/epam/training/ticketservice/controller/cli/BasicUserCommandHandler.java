@@ -41,8 +41,7 @@ public class BasicUserCommandHandler {
             System.out.println("privileged command");
         }
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!Objects.isNull(authentication)) {
+        if (!Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
             return "Already signed in. Sign out first";
         }
 
