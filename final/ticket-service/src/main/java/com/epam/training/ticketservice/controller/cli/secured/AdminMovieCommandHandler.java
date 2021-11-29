@@ -1,7 +1,7 @@
 package com.epam.training.ticketservice.controller.cli.secured;
 
 import com.epam.training.ticketservice.exception.MovieAlreadyExistsException;
-import com.epam.training.ticketservice.model.movie.Movie;
+import com.epam.training.ticketservice.model.Movie;
 import com.epam.training.ticketservice.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -16,13 +16,13 @@ public class AdminMovieCommandHandler {
     @ShellMethod(value = "Create new movie", key = "create movie")
     public String createMovie(String title, String category, int length){
         try{
-            Movie movie = new Movie.MovieBuilder()
+            Movie movie = Movie.builder()
                     .title(title)
                     .category(category)
                     .length(length)
                     .build();
             movieService.createMovie(movie);
-            return "Movie created successfully";
+            return "Room created successfully";
         } catch (MovieAlreadyExistsException ex) {
             return ex.getMessage();
         }

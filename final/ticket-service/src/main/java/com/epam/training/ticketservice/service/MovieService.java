@@ -1,7 +1,7 @@
 package com.epam.training.ticketservice.service;
 
 import com.epam.training.ticketservice.exception.MovieAlreadyExistsException;
-import com.epam.training.ticketservice.model.movie.Movie;
+import com.epam.training.ticketservice.model.Movie;
 import com.epam.training.ticketservice.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
