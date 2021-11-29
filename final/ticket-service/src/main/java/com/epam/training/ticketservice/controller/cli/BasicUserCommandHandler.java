@@ -34,7 +34,7 @@ public class BasicUserCommandHandler {
         }
     }
 
-    @ShellMethod(value = "Login user", key = "sign in")
+    @ShellMethod(value = "Sign user in", key = "sign in")
     public String signIn(@ShellOption("privileged") boolean privileged, String username, String password){
 
         if (privileged) {
