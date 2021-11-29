@@ -41,8 +41,6 @@ public class BasicUserCommandHandler {
             System.out.println("privileged command");
         }
 
-        System.out.println("pw: " + password + ", user: " + username + ", privileged: " + privileged);
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!Objects.isNull(authentication)) {
             return "Already signed in. Sign out first";
@@ -54,7 +52,26 @@ public class BasicUserCommandHandler {
             SecurityContextHolder.getContext().setAuthentication(result);
             return "Authentication success";
         } catch (AuthenticationException e) {
-            return "Login failed due to incorrect credentials";
+            return "Signing in failed due to incorrect credentials";
+        }
+    }
+
+    @ShellMethod(value = "Sign user out", key = "sign out")
+    public String signOut(){
+        if (Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
+            return "You are not signed in";
+        } else {
+            SecurityContextHolder.clearContext();
+            return "Signed out successfully";
+        }
+    }
+
+    @ShellMethod(value = "Get signed in user data", key = "describe account")
+    public String me(){
+        if (Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
+            return "You are not signed in";
+        } else {
+            return SecurityContextHolder.getContext().getAuthentication().getName();
         }
     }
 }
