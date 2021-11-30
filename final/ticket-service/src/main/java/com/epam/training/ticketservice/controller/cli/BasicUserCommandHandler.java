@@ -7,12 +7,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
+import java.util.Collection;
 import java.util.Objects;
 
 @ShellComponent
@@ -70,7 +72,13 @@ public class BasicUserCommandHandler {
         if (Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
             return "You are not signed in";
         } else {
-            return SecurityContextHolder.getContext().getAuthentication().getName();
+            GrantedAuthority admin = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                    .filter( role -> "ADMIN".equals(role.getAuthority()))
+                    .findAny()
+                    .orElse(null);
+
+            return String.format("Signed in with %s account %s", Objects.isNull(admin)? "" : "privileged",
+                    SecurityContextHolder.getContext().getAuthentication().getName());
         }
     }
 }
