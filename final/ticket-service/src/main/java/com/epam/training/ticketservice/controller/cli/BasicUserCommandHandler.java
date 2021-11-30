@@ -14,7 +14,6 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
-import java.util.Collection;
 import java.util.Objects;
 
 @ShellComponent
@@ -73,11 +72,11 @@ public class BasicUserCommandHandler {
             return "You are not signed in";
         } else {
             GrantedAuthority admin = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                    .filter( role -> "ADMIN".equals(role.getAuthority()))
+                    .filter( role -> "ROLE_ADMIN".equals(role.getAuthority()))
                     .findAny()
                     .orElse(null);
 
-            return String.format("Signed in with %s account %s", Objects.isNull(admin)? "" : "privileged",
+            return String.format("Signed in with %s account %s", Objects.isNull(admin)? "user" : "privileged",
                     SecurityContextHolder.getContext().getAuthentication().getName());
         }
     }

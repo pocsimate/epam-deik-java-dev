@@ -25,4 +25,9 @@ public class Room {
     @Column(name = "n_columns")
     private int numberOfColumns;
 
+    @Override
+    public String toString() {
+        return "Room " + name + ", with " + numberOfRows * numberOfColumns +
+                " seats, " + numberOfRows + " rows and " + numberOfColumns + " columns";
+    }
 }

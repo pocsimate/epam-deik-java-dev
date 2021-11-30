@@ -23,4 +23,8 @@ public class Movie {
 
     private int length;
 
+    @Override
+    public String toString() {
+        return title + " (" + category + ", " + length + ")";
+    }
 }
