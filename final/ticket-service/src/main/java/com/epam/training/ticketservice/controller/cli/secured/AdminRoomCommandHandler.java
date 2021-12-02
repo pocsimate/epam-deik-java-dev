@@ -12,8 +12,12 @@ import org.springframework.shell.standard.ShellMethod;
 @ShellComponent
 public class AdminRoomCommandHandler {
 
+    private final RoomService roomService;
+
     @Autowired
-    RoomService roomService;
+    public AdminRoomCommandHandler(RoomService roomService) {
+        this.roomService = roomService;
+    }
 
     @ShellMethod(value = "Create new room", key = "create room")
     public String createRoom(String name, int numberOfRows, int numberOfColumns){

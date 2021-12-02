@@ -12,8 +12,12 @@ import org.springframework.shell.standard.ShellMethod;
 @ShellComponent
 public class BasicRoomCommandHandler {
 
+    private RoomService roomService;
+
     @Autowired
-    RoomService roomService;
+    public BasicRoomCommandHandler(RoomService roomService) {
+        this.roomService = roomService;
+    }
 
     @ShellMethod(value = "List the rooms", key = "list rooms")
     public String listRooms() {

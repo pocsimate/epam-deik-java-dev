@@ -19,11 +19,14 @@ import java.util.Objects;
 @ShellComponent
 public class BasicUserCommandHandler {
 
-    @Autowired
-    CliUserService cliUserService;
+    private CliUserService cliUserService;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    public BasicUserCommandHandler(CliUserService cliUserService, AuthenticationManager authenticationManager) {
+        this.cliUserService = cliUserService;
+        this.authenticationManager = authenticationManager;
+    }
 
     @ShellMethod(value = "Register user", key = "sign up")
     public String signUp(String username, String password){
@@ -35,6 +38,7 @@ public class BasicUserCommandHandler {
         }
     }
 
+    // TODO impelement privileged well.
     @ShellMethod(value = "Sign user in", key = "sign in")
     public String signIn(@ShellOption("privileged") boolean privileged, String username, String password){
 

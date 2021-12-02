@@ -15,8 +15,12 @@ import java.util.Optional;
 @Service
 public class MovieService {
 
+    private MovieRepository movieRepository;
+
     @Autowired
-    MovieRepository movieRepository;
+    public MovieService(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
+    }
 
     public Optional<Movie> getMovieByTitle(String title){
         return movieRepository.getMovieByTitle(title);

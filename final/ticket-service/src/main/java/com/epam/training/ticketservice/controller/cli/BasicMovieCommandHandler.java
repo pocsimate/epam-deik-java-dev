@@ -12,8 +12,12 @@ import org.springframework.shell.standard.ShellMethod;
 @ShellComponent
 public class BasicMovieCommandHandler {
 
+    private MovieService movieService;
+
     @Autowired
-    MovieService movieService;
+    public BasicMovieCommandHandler(MovieService movieService) {
+        this.movieService = movieService;
+    }
 
     @ShellMethod(value = "List the movies", key = "list movies")
     public String listMovies() {

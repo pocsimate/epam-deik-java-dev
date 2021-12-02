@@ -16,8 +16,12 @@ import java.util.Optional;
 @Service
 public class CliUserService implements UserDetailsService {
 
+    private CliUserRepository cliUserRepository;
+
     @Autowired
-    CliUserRepository cliUserRepository;
+    public void setCliUserRepository(CliUserRepository cliUserRepository) {
+        this.cliUserRepository = cliUserRepository;
+    }
 
     public void registerUser(String username, String password){
         if (getUserByUsername(username).isPresent()){

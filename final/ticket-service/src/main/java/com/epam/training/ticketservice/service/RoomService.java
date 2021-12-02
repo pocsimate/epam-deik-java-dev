@@ -15,8 +15,12 @@ import java.util.Optional;
 @Service
 public class RoomService {
 
+    private RoomRepository roomRepository;
+
     @Autowired
-    RoomRepository roomRepository;
+    public RoomService(RoomRepository roomRepository) {
+        this.roomRepository = roomRepository;
+    }
 
     public Optional<Room> getRoomByName(String name) {
         return roomRepository.getRoomByName(name);

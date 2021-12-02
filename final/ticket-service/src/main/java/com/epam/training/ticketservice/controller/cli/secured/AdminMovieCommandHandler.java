@@ -11,8 +11,12 @@ import org.springframework.shell.standard.ShellMethod;
 @ShellComponent
 public class AdminMovieCommandHandler {
 
+    private MovieService movieService;
+
     @Autowired
-    MovieService movieService;
+    public AdminMovieCommandHandler(MovieService movieService) {
+        this.movieService = movieService;
+    }
 
     @ShellMethod(value = "Create new movie", key = "create movie")
     public String createMovie(String title, String category, int length) {
