@@ -1,6 +1,5 @@
-package com.epam.training.ticketservice.controller.cli.secured;
+package com.epam.training.ticketservice.controller.cli.authorized;
 
-import com.epam.training.ticketservice.exception.MovieDoesNotExistsException;
 import com.epam.training.ticketservice.exception.RoomAlreadyExistsException;
 import com.epam.training.ticketservice.exception.RoomDoesNotExistException;
 import com.epam.training.ticketservice.model.Room;
@@ -8,9 +7,10 @@ import com.epam.training.ticketservice.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellMethodAvailability;
 
 @ShellComponent
-public class AdminRoomCommandHandler {
+public class AdminRoomCommandHandler extends AuthorizedCommand {
 
     private final RoomService roomService;
 
@@ -19,6 +19,7 @@ public class AdminRoomCommandHandler {
         this.roomService = roomService;
     }
 
+    @ShellMethodAvailability("isAdminAuthorized")
     @ShellMethod(value = "Create new room", key = "create room")
     public String createRoom(String name, int numberOfRows, int numberOfColumns){
         try{
@@ -34,6 +35,7 @@ public class AdminRoomCommandHandler {
         }
     }
 
+    @ShellMethodAvailability("isAdminAuthorized")
     @ShellMethod(value = "Edit existing room", key = "update room")
     public String editRoom(String name, int numberOfRows, int numberOfColumns) {
         try {
@@ -49,6 +51,7 @@ public class AdminRoomCommandHandler {
         }
     }
 
+    @ShellMethodAvailability("isAdminAuthorized")
     @ShellMethod(value = "Delete existing room", key = "delete room")
     public String deleteRoom(String name) {
         try {

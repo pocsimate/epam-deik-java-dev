@@ -1,4 +1,4 @@
-package com.epam.training.ticketservice.controller.cli.secured;
+package com.epam.training.ticketservice.controller.cli.authorized;
 
 import com.epam.training.ticketservice.exception.MovieAlreadyExistsException;
 import com.epam.training.ticketservice.exception.MovieDoesNotExistsException;
@@ -7,9 +7,10 @@ import com.epam.training.ticketservice.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellMethodAvailability;
 
 @ShellComponent
-public class AdminMovieCommandHandler {
+public class AdminMovieCommandHandler extends AuthorizedCommand {
 
     private MovieService movieService;
 
@@ -18,6 +19,7 @@ public class AdminMovieCommandHandler {
         this.movieService = movieService;
     }
 
+    @ShellMethodAvailability("isAdminAuthorized")
     @ShellMethod(value = "Create new movie", key = "create movie")
     public String createMovie(String title, String category, int length) {
         try {
@@ -27,12 +29,13 @@ public class AdminMovieCommandHandler {
                     .length(length)
                     .build();
             movieService.createMovie(movie);
-            return "Room created successfully";
+            return "Movie created successfully";
         } catch (MovieAlreadyExistsException ex) {
             return ex.getMessage();
         }
     }
 
+    @ShellMethodAvailability("isAdminAuthorized")
     @ShellMethod(value = "Edit existing movie", key = "update movie")
     public String editMovie(String title, String category, int length) {
         try {
@@ -47,7 +50,7 @@ public class AdminMovieCommandHandler {
             return ex.getMessage();
         }
     }
-
+    @ShellMethodAvailability("isAdminAuthorized")
     @ShellMethod(value = "Delete existing movie", key = "delete movie")
     public String deleteMovie(String title) {
         try {

@@ -2,6 +2,7 @@ package com.epam.training.ticketservice.controller.cli;
 
 import com.epam.training.ticketservice.exception.UserAlreadyExistsException;
 import com.epam.training.ticketservice.service.CliUserService;
+import com.epam.training.ticketservice.util.AuthorityCheckerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -72,15 +73,10 @@ public class BasicUserCommandHandler {
 
     @ShellMethod(value = "Get signed in user data", key = "describe account")
     public String me(){
-        if (Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
+        if (!AuthorityCheckerUtil.isAuthorized()) {
             return "You are not signed in";
         } else {
-            GrantedAuthority admin = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                    .filter( role -> "ROLE_ADMIN".equals(role.getAuthority()))
-                    .findAny()
-                    .orElse(null);
-
-            return String.format("Signed in with %s account %s", Objects.isNull(admin)? "user" : "privileged",
+            return String.format("Signed in with %s account %s", AuthorityCheckerUtil.isAdmin()? "privileged" : "user",
                     SecurityContextHolder.getContext().getAuthentication().getName());
         }
     }
