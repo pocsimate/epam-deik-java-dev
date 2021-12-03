@@ -23,7 +23,7 @@ public class MovieService {
     }
 
     public Optional<Movie> getMovieByTitle(String title){
-        return movieRepository.getMovieByTitle(title);
+        return movieRepository.findByTitle(title);
     }
 
     @Transactional

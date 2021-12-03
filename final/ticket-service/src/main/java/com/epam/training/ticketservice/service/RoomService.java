@@ -23,7 +23,7 @@ public class RoomService {
     }
 
     public Optional<Room> getRoomByName(String name) {
-        return roomRepository.getRoomByName(name);
+        return roomRepository.findByName(name);
     }
 
     @Transactional
@@ -54,7 +54,7 @@ public class RoomService {
         if (optionalRoom.isEmpty()) {
             throw new RoomDoesNotExistException(name);
         } else {
-            roomRepository.deleteByTitle(name);
+            roomRepository.deleteByName(name);
         }
     }
 

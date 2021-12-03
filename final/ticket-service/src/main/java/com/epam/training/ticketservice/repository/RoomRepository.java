@@ -12,9 +12,9 @@ import java.util.Optional;
 public interface RoomRepository extends JpaRepository<Room, Integer> {
 
     @Query(value = "SELECT * FROM cinema_room cr WHERE cr.name = ?1", nativeQuery = true)
-    Optional<Room> getRoomByName(String name);
+    Optional<Room> findByName(String name);
 
     @Modifying
     @Query(value = "DELETE  FROM cinema_room WHERE name = ?1", nativeQuery = true)
-    void deleteByTitle(String name);
+    void deleteByName(String name);
 }
