@@ -50,6 +50,7 @@ public class AdminMovieCommandHandler extends AuthorizedCommand {
             return ex.getMessage();
         }
     }
+
     @ShellMethodAvailability("isAdminAuthorized")
     @ShellMethod(value = "Delete existing movie", key = "delete movie")
     public String deleteMovie(String title) {

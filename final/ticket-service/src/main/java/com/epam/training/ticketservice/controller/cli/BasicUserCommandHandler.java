@@ -40,7 +40,7 @@ public class BasicUserCommandHandler {
     }
 
     // TODO impelement privileged well.
-    @ShellMethod(value = "Sign user in", key = "sign in")
+    @ShellMethod(value = "Log user in", key = "sign in")
     public String signIn(@ShellOption("privileged") boolean privileged, String username, String password){
 
         if (privileged) {
@@ -48,35 +48,35 @@ public class BasicUserCommandHandler {
         }
 
         if (!Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
-            return "Already signed in. Sign out first";
+            return "Already logged in. Log out first";
         }
 
         Authentication request = new UsernamePasswordAuthenticationToken(username, password);
         try {
             Authentication result = authenticationManager.authenticate(request);
             SecurityContextHolder.getContext().setAuthentication(result);
-            return "Authentication success";
+            return "Login success";
         } catch (AuthenticationException e) {
-            return "Signing in failed due to incorrect credentials";
+            return "Login failed due to incorrect credentials\n";
         }
     }
 
-    @ShellMethod(value = "Sign user out", key = "sign out")
+    @ShellMethod(value = "Log user out", key = "sign out")
     public String signOut(){
         if (Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
-            return "You are not signed in";
+            return "You are not logged in";
         } else {
             SecurityContextHolder.clearContext();
-            return "Signed out successfully";
+            return "Logged out successfully";
         }
     }
 
-    @ShellMethod(value = "Get signed in user data", key = "describe account")
+    @ShellMethod(value = "Get logged in user data", key = "describe account")
     public String me(){
         if (!AuthorityCheckerUtil.isAuthorized()) {
             return "You are not signed in";
         } else {
-            return String.format("Signed in with %s account %s", AuthorityCheckerUtil.isAdmin()? "privileged" : "user",
+            return String.format("Signed in with %s %s", AuthorityCheckerUtil.isAdmin()? "privileged account" : "account",
                     SecurityContextHolder.getContext().getAuthentication().getName());
         }
     }

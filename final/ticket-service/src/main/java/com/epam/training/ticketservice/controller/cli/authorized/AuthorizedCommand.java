@@ -4,7 +4,7 @@ import com.epam.training.ticketservice.util.AuthorityCheckerUtil;
 import org.springframework.shell.Availability;
 
 public abstract class AuthorizedCommand {
-    public Availability isUserAuthorized() {
+    public Availability isAuthorized() {
         if (AuthorityCheckerUtil.isAuthorized()) {
             return Availability.available();
         }
