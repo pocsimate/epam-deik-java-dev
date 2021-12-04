@@ -1,7 +1,7 @@
 package com.epam.training.ticketservice.service;
 
 import com.epam.training.ticketservice.exception.MovieAlreadyExistsException;
-import com.epam.training.ticketservice.exception.MovieDoesNotExistsException;
+import com.epam.training.ticketservice.exception.MovieDoesNotExistException;
 import com.epam.training.ticketservice.model.Movie;
 import com.epam.training.ticketservice.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class MovieService {
         if (movie.isPresent()) {
             return movie.get();
         } else {
-            throw new MovieDoesNotExistsException(title);
+            throw new MovieDoesNotExistException(title);
         }
     }
 
@@ -51,6 +51,7 @@ public class MovieService {
         dbMovie.setTitle(movie.getTitle());
         dbMovie.setCategory(movie.getCategory());
         dbMovie.setLength(movie.getLength());
+        movieRepository.save(dbMovie);
     }
 
     @Transactional

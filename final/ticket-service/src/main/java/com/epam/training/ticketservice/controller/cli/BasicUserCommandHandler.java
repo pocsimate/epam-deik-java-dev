@@ -42,12 +42,8 @@ public class BasicUserCommandHandler {
     @ShellMethod(value = "Log user in", key = "sign in")
     public String signIn(@ShellOption("privileged") boolean privileged, String username, String password){
 
-        if (privileged) {
-            System.out.println("privileged command");
-        }
-
         if (!Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
-            return "Already logged in. Log out first";
+            return "Already signed in. Sign out first";
         }
 
         Authentication request = new UsernamePasswordAuthenticationToken(username, password);
@@ -56,7 +52,7 @@ public class BasicUserCommandHandler {
             SecurityContextHolder.getContext().setAuthentication(result);
             return "Login success";
         } catch (AuthenticationException e) {
-            return "Login failed due to incorrect credentials\n";
+            return "Login failed due to incorrect credentials";
         }
     }
 

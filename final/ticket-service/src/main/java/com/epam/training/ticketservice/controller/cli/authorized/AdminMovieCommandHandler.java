@@ -1,7 +1,7 @@
 package com.epam.training.ticketservice.controller.cli.authorized;
 
 import com.epam.training.ticketservice.exception.MovieAlreadyExistsException;
-import com.epam.training.ticketservice.exception.MovieDoesNotExistsException;
+import com.epam.training.ticketservice.exception.MovieDoesNotExistException;
 import com.epam.training.ticketservice.model.Movie;
 import com.epam.training.ticketservice.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class AdminMovieCommandHandler extends AuthorizedCommand {
                     .build();
             movieService.updateMovie(movie);
             return "Movie updated successfully";
-        } catch (MovieDoesNotExistsException ex) {
+        } catch (MovieDoesNotExistException ex) {
             return ex.getMessage();
         }
     }
@@ -57,7 +57,7 @@ public class AdminMovieCommandHandler extends AuthorizedCommand {
         try {
             movieService.deleteMovie(title);
             return "Movie deleted successfully";
-        } catch (MovieDoesNotExistsException ex) {
+        } catch (MovieDoesNotExistException ex) {
             return ex.getMessage();
         }
     }
