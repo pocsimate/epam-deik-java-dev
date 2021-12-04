@@ -36,6 +36,7 @@ public class ScreeningService {
     public void createScreening(String movieTitle, String roomName, LocalDateTime screeningStartDate) {
         Movie movie = movieService.getMovieIfExists(movieTitle);
         Room room = roomService.getRoomIfExists(roomName);
+
         checkOverlap(room, movie, screeningStartDate);
 
         Screening screening = Screening.builder()
@@ -49,13 +50,16 @@ public class ScreeningService {
 
     // FIXME nagyon gagyi, csak akkor biztos, ha egymás utáni adogatjuk be a filmeket időrendben
     public void checkOverlap(Room room, Movie movie, LocalDateTime screeningStartDate) {
-        List<Screening> screeningList = screeningRepository.findScreeningsInRoomOnDay(room.getId(), screeningStartDate.with(LocalTime.MIN), screeningStartDate.with(LocalTime.MAX));
-        Range<LocalDateTime> addableScreeningRange = Range.open(screeningStartDate, screeningStartDate.plusMinutes(movie.getLength()));
-
-        for (Screening screening : screeningList) {
-            Range<LocalDateTime> screeningRangeWithBreak = Range.open(screening.getScreeningDate(), screening.getScreeningDate().plusMinutes(screening.getMovie().getLength() + BREAK_MINUTES));
-            if (screeningRangeWithBreak.isConnected(addableScreeningRange)) {
-                throwOverlapError(screeningRangeWithBreak, addableScreeningRange);
+        List<Screening> screeningList = screeningRepository.findScreeningsInRoomOnDay(room.getId(), screeningStartDate.with(LocalTime.MIN),
+                screeningStartDate.with(LocalTime.MAX));
+        if (!screeningList.isEmpty()) {
+            Range<LocalDateTime> addableScreeningRange = Range.open(screeningStartDate, screeningStartDate.plusMinutes(movie.getLength()));
+            for (Screening screening : screeningList) {
+                Range<LocalDateTime> screeningRangeWithBreak = Range.open(screening.getScreeningDate(),
+                        screening.getScreeningDate().plusMinutes(screening.getMovie().getLength() + BREAK_MINUTES));
+                if (screeningRangeWithBreak.isConnected(addableScreeningRange)) {
+                    throwOverlapError(screeningRangeWithBreak, addableScreeningRange);
+                }
             }
         }
     }
