@@ -23,6 +23,10 @@ public class CliUserService implements UserDetailsService {
         this.cliUserRepository = cliUserRepository;
     }
 
+    public Optional<CliUser> getUserByUsername(String username){
+        return cliUserRepository.findByUsername(username);
+    }
+
     public void registerUser(String username, String password){
         if (getUserByUsername(username).isPresent()){
             throw new UserAlreadyExistsException(username);
@@ -30,10 +34,6 @@ public class CliUserService implements UserDetailsService {
             CliUser cliUser = new CliUser(username, password);
             cliUserRepository.save(cliUser);
         }
-    }
-
-    public Optional<CliUser> getUserByUsername(String username){
-        return cliUserRepository.findByUsername(username);
     }
 
     @Override
