@@ -49,6 +49,7 @@ public class RoomService {
         dbRoom.setName(room.getName());
         dbRoom.setNumberOfColumns(room.getNumberOfColumns());
         dbRoom.setNumberOfRows(room.getNumberOfRows());
+        roomRepository.save(dbRoom);
     }
 
     @Transactional

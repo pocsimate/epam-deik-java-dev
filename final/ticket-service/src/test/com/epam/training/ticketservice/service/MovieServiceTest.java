@@ -32,7 +32,7 @@ class MovieServiceTest {
     Movie testMovie;
 
     @BeforeEach
-    void init() {
+    void setUp() {
         testMovie = new Movie();
         testMovie.setTitle("Test Movie");
         testMovie.setCategory("test category");
