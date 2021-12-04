@@ -26,6 +26,15 @@ public class MovieService {
         return movieRepository.findByTitle(title);
     }
 
+    public Movie getMovieIfExists(String title) {
+        Optional<Movie> movie = findMovieByTitle(title);
+        if (movie.isPresent()) {
+            return movie.get();
+        } else {
+            throw new MovieDoesNotExistsException(title);
+        }
+    }
+
     @Transactional
     public void createMovie(Movie movie){
         Optional<Movie> optionalMovie = findMovieByTitle(movie.getTitle());
@@ -38,25 +47,16 @@ public class MovieService {
 
     @Transactional
     public void updateMovie(Movie movie) {
-        Optional<Movie> optionalMovie = findMovieByTitle(movie.getTitle());
-        if (optionalMovie.isEmpty()) {
-            throw new MovieDoesNotExistsException(movie.getTitle());
-        } else {
-            Movie dbMovie = optionalMovie.get();
-            dbMovie.setTitle(movie.getTitle());
-            dbMovie.setCategory(movie.getCategory());
-            dbMovie.setLength(movie.getLength());
-        }
+        Movie dbMovie = getMovieIfExists(movie.getTitle());
+        dbMovie.setTitle(movie.getTitle());
+        dbMovie.setCategory(movie.getCategory());
+        dbMovie.setLength(movie.getLength());
     }
 
     @Transactional
     public void deleteMovie(String title) {
-        Optional<Movie> optionalMovie = findMovieByTitle(title);
-        if (optionalMovie.isEmpty()) {
-            throw new MovieDoesNotExistsException(title);
-        } else {
-            movieRepository.deleteByTitle(title);
-        }
+        Movie dbMovie = getMovieIfExists(title);
+        movieRepository.deleteByTitle(title);
     }
 
     @Transactional

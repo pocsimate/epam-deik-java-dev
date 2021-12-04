@@ -37,8 +37,8 @@ public class ScreeningService {
 
     @Transactional
     public void createScreening(String movieTitle, String roomName, LocalDateTime screeningStartDate) {
-        Movie movie = getMovieIfExists(movieTitle);
-        Room room = getRoomIfExists(roomName);
+        Movie movie = movieService.getMovieIfExists(movieTitle);
+        Room room = roomService.getRoomIfExists(roomName);
         checkOverlap(room, movie, screeningStartDate);
 
         Screening screening = Screening.builder()
@@ -76,28 +76,6 @@ public class ScreeningService {
             errorMessage = "This would start in the break period after another screening in this room";
         }
             throw new OverlappingScreeningException(errorMessage);
-    }
-
-    // create screening "Minden6ó" "BigBen" "2021-12-06 14:30"
-
-    // TODO nem itt a helye, plusz refaktorhoz jo lesz
-    public Room getRoomIfExists(String name) {
-        Optional<Room> room = roomService.findRoomByName(name);
-        if (room.isPresent()) {
-            return room.get();
-        } else {
-            throw new RoomDoesNotExistException(name);
-        }
-    }
-
-    // TODO nem itt a helye, plusz refaktorhoz jo lesz
-    public Movie getMovieIfExists(String title) {
-        Optional<Movie> movie = movieService.findMovieByTitle(title);
-        if (movie.isPresent()) {
-            return movie.get();
-        } else {
-            throw new MovieDoesNotExistsException(title);
-        }
     }
 
 }

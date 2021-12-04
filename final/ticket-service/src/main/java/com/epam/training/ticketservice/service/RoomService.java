@@ -26,6 +26,15 @@ public class RoomService {
         return roomRepository.findByName(name);
     }
 
+    public Room getRoomIfExists(String name) {
+        Optional<Room> room = findRoomByName(name);
+        if (room.isPresent()) {
+            return room.get();
+        } else {
+            throw new RoomDoesNotExistException(name);
+        }
+    }
+
     @Transactional
     public void createRoom(Room room){
         Optional<Room> optionalRoom = findRoomByName(room.getName());
@@ -36,25 +45,16 @@ public class RoomService {
     }
 
     @Transactional public void updateRoom(Room room) {
-        Optional<Room> optionalRoom = findRoomByName(room.getName());
-        if (optionalRoom.isEmpty()) {
-            throw new RoomDoesNotExistException(room.getName());
-        } else {
-            Room dbRoom = optionalRoom.get();
-            dbRoom.setName(room.getName());
-            dbRoom.setNumberOfColumns(room.getNumberOfColumns());
-            dbRoom.setNumberOfRows(room.getNumberOfRows());
-        }
+        Room dbRoom = getRoomIfExists(room.getName());
+        dbRoom.setName(room.getName());
+        dbRoom.setNumberOfColumns(room.getNumberOfColumns());
+        dbRoom.setNumberOfRows(room.getNumberOfRows());
     }
 
     @Transactional
     public void deleteRoom(String name) {
-        Optional<Room> optionalRoom = findRoomByName(name);
-        if (optionalRoom.isEmpty()) {
-            throw new RoomDoesNotExistException(name);
-        } else {
-            roomRepository.deleteByName(name);
-        }
+        Room dbRoom = getRoomIfExists(name);
+        roomRepository.deleteByName(dbRoom.getName());
     }
 
     @Transactional
