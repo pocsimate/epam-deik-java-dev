@@ -56,7 +56,7 @@ public class MovieService {
     @Transactional
     public void deleteMovie(String title) {
         Movie dbMovie = getMovieIfExists(title);
-        movieRepository.deleteByTitle(title);
+        movieRepository.deleteByTitle(dbMovie.getTitle());
     }
 
     @Transactional

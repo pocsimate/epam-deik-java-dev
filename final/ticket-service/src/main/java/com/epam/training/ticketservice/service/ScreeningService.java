@@ -3,13 +3,10 @@ package com.epam.training.ticketservice.service;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import com.epam.training.ticketservice.exception.MovieDoesNotExistsException;
 import com.epam.training.ticketservice.exception.OverlappingScreeningException;
-import com.epam.training.ticketservice.exception.RoomDoesNotExistException;
 import com.epam.training.ticketservice.model.Movie;
 import com.epam.training.ticketservice.model.Room;
 import com.epam.training.ticketservice.model.Screening;
@@ -78,4 +75,7 @@ public class ScreeningService {
             throw new OverlappingScreeningException(errorMessage);
     }
 
+    public List<Screening> getScreeningsList() {
+        return screeningRepository.findAll();
+    }
 }

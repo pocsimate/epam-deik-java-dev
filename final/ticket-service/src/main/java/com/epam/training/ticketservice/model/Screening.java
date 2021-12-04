@@ -45,7 +45,7 @@ public class Screening {
     private LocalDateTime screeningDate;
 
     @Override public String toString() {
-        return movie.getTitle() + " (" + movie.getCategory() + ", " + movie.getLength() + " minutes, screened in room " + room.getName() + ", at " + screeningDate.format(
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) +" )";
+        return movie.getTitle() + " (" + movie.getCategory() + ", " + movie.getLength() + " minutes), screened in room " + room.getName() + ", at " + screeningDate.format(
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 }
