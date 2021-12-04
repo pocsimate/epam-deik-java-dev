@@ -22,22 +22,21 @@ public class RoomService {
         this.roomRepository = roomRepository;
     }
 
-    public Optional<Room> getRoomByName(String name) {
+    public Optional<Room> findRoomByName(String name) {
         return roomRepository.findByName(name);
     }
 
     @Transactional
     public void createRoom(Room room){
-        Optional<Room> optionalRoom = getRoomByName(room.getName());
+        Optional<Room> optionalRoom = findRoomByName(room.getName());
         if (optionalRoom.isPresent()) {
             throw new RoomAlreadyExistsException(room.getName());
         }
         roomRepository.save(room);
     }
 
-    @Transactional
-    public void updateRoom(Room room) {
-        Optional<Room> optionalRoom = getRoomByName(room.getName());
+    @Transactional public void updateRoom(Room room) {
+        Optional<Room> optionalRoom = findRoomByName(room.getName());
         if (optionalRoom.isEmpty()) {
             throw new RoomDoesNotExistException(room.getName());
         } else {
@@ -50,7 +49,7 @@ public class RoomService {
 
     @Transactional
     public void deleteRoom(String name) {
-        Optional<Room> optionalRoom = getRoomByName(name);
+        Optional<Room> optionalRoom = findRoomByName(name);
         if (optionalRoom.isEmpty()) {
             throw new RoomDoesNotExistException(name);
         } else {

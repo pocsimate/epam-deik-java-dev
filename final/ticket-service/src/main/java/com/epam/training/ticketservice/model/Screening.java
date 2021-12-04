@@ -1,5 +1,8 @@
 package com.epam.training.ticketservice.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,7 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "screening")
+@Table(name = "cinema_screening")
 @Builder
 @Getter
 @Setter
@@ -27,7 +30,7 @@ import lombok.Setter;
 public class Screening {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToOne
@@ -39,6 +42,10 @@ public class Screening {
     private Room room;
 
     @Column(name = "screening_date")
-    private Date screeningDate;
+    private LocalDateTime screeningDate;
 
+    @Override public String toString() {
+        return movie.getTitle() + " (" + movie.getCategory() + ", " + movie.getLength() + " minutes, screened in room " + room.getName() + ", at " + screeningDate.format(
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) +" )";
+    }
 }

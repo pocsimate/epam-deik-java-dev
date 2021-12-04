@@ -22,13 +22,13 @@ public class MovieService {
         this.movieRepository = movieRepository;
     }
 
-    public Optional<Movie> getMovieByTitle(String title){
+    public Optional<Movie> findMovieByTitle(String title){
         return movieRepository.findByTitle(title);
     }
 
     @Transactional
     public void createMovie(Movie movie){
-        Optional<Movie> optionalMovie = getMovieByTitle(movie.getTitle());
+        Optional<Movie> optionalMovie = findMovieByTitle(movie.getTitle());
         if (optionalMovie.isPresent()) {
             throw new MovieAlreadyExistsException(movie.getTitle());
         } else {
@@ -38,7 +38,7 @@ public class MovieService {
 
     @Transactional
     public void updateMovie(Movie movie) {
-        Optional<Movie> optionalMovie = getMovieByTitle(movie.getTitle());
+        Optional<Movie> optionalMovie = findMovieByTitle(movie.getTitle());
         if (optionalMovie.isEmpty()) {
             throw new MovieDoesNotExistsException(movie.getTitle());
         } else {
@@ -51,7 +51,7 @@ public class MovieService {
 
     @Transactional
     public void deleteMovie(String title) {
-        Optional<Movie> optionalMovie = getMovieByTitle(title);
+        Optional<Movie> optionalMovie = findMovieByTitle(title);
         if (optionalMovie.isEmpty()) {
             throw new MovieDoesNotExistsException(title);
         } else {

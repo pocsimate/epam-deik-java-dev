@@ -11,7 +11,7 @@ public abstract class AuthorizedCommand {
         return Availability.unavailable("you are not signedIn. Please sign in to be able to use this command!");
     }
     public Availability isAdminAuthorized() {
-        if (AuthorityCheckerUtil.isAdmin()) {
+        if (AuthorityCheckerUtil.isAdminAuthorized()) {
             return Availability.available();
         }
         return Availability.unavailable("you have insufficient privileges to run this command!");

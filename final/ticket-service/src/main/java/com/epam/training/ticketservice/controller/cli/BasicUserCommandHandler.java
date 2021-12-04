@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.shell.standard.ShellComponent;
@@ -76,7 +75,7 @@ public class BasicUserCommandHandler {
         if (!AuthorityCheckerUtil.isAuthorized()) {
             return "You are not signed in";
         } else {
-            return String.format("Signed in with %s %s", AuthorityCheckerUtil.isAdmin()? "privileged account" : "account",
+            return String.format("Signed in with %s %s", AuthorityCheckerUtil.isAdminAuthorized()? "privileged account" : "account",
                     SecurityContextHolder.getContext().getAuthentication().getName());
         }
     }
