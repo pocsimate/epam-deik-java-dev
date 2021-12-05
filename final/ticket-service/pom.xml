@@ -159,6 +159,10 @@
                 <version>${surefire-maven-plugin.version}</version>
                 <configuration>
                     <argLine>@{argLine}</argLine>
+                    <includes>
+                        <include>**/Test*.java</include>
+                        <include>**/*Test.java</include>
+                    </includes>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -216,6 +220,23 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
+                            <excludes>
+                                <exclude>com/epam/training/ticketservice/model/CliUser.class</exclude>
+                                <exclude>com/epam/training/ticketservice/model/CliUserType.class</exclude>
+                                <exclude>com/epam/training/ticketservice/model/Booking.class</exclude>
+                                <exclude>com/epam/training/ticketservice/model/Movie.class</exclude>
+                                <exclude>com/epam/training/ticketservice/model/Room.class</exclude>
+                                <exclude>com/epam/training/ticketservice/model/Screening.class</exclude>
+                                <exclude>com/epam/training/ticketservice/model/Reservation.class</exclude>
+                                <exclude>com/epam/training/ticketservice/exception/MovieAlreadyExistsException.class</exclude>
+                                <exclude>com/epam/training/ticketservice/exception/MovieDoesNotExistException.class</exclude>
+                                <exclude>com/epam/training/ticketservice/exception/OverlappingScreeningException.class</exclude>
+                                <exclude>com/epam/training/ticketservice/exception/RoomAlreadyExistsException.class</exclude>
+                                <exclude>com/epam/training/ticketservice/exception/RoomDoesNotExistException.class</exclude>
+                                <exclude>com/epam/training/ticketservice/exception/UserAlreadyExistsException.class</exclude>
+                                <exclude>com/epam/training/ticketservice/config/SpringSecurityConfiguration.class</exclude>
+                                <exclude>com/epam/training/ticketservice/config/PromptProviderConfiguration.class</exclude>
+                            </excludes>
                             <rules>
                                 <rule>
                                     <element>BUNDLE</element>
