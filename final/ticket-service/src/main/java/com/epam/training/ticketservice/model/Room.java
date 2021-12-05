@@ -1,8 +1,17 @@
 package com.epam.training.ticketservice.model;
 
-import lombok.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "cinema_room")
@@ -27,7 +36,7 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room " + name + ", with " + numberOfRows * numberOfColumns +
-                " seats, " + numberOfRows + " rows and " + numberOfColumns + " columns";
+        return "Room " + name + " with " + numberOfRows * numberOfColumns
+                + " seats, " + numberOfRows + " rows and " + numberOfColumns + " columns";
     }
 }

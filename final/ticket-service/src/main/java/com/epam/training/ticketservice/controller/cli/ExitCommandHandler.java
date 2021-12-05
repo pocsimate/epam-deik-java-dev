@@ -5,7 +5,7 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.commands.Quit;
 
 @ShellComponent
-public class ExitCommandHandler implements Quit.Command{
+public class ExitCommandHandler implements Quit.Command {
 
     @ShellMethod(value = "Exits the application", key = {"exit", "quit", "terminate"})
     public void exit() {

@@ -23,12 +23,12 @@ public class CliUserService implements UserDetailsService {
         this.cliUserRepository = cliUserRepository;
     }
 
-    public Optional<CliUser> getUserByUsername(String username){
+    public Optional<CliUser> getUserByUsername(String username) {
         return cliUserRepository.findByUsername(username);
     }
 
-    public void registerUser(String username, String password){
-        if (getUserByUsername(username).isPresent()){
+    public void registerUser(String username, String password) {
+        if (getUserByUsername(username).isPresent()) {
             throw new UserAlreadyExistsException(username);
         } else {
             CliUser cliUser = new CliUser(username, password);
@@ -46,13 +46,13 @@ public class CliUserService implements UserDetailsService {
                     .username(cliUser.get().getUsername())
                     .password(cliUser.get().getPassword());
 
-             if (cliUser.get().getCliUserRole().equals(CliUserRole.ADMIN)) {
-                 userBuilder.roles("USER", "ADMIN");
-             } else {
-                 userBuilder.roles("USER");
-             }
+            if (cliUser.get().getCliUserRole().equals(CliUserRole.ADMIN)) {
+                userBuilder.roles("USER", "ADMIN");
+            } else {
+                userBuilder.roles("USER");
+            }
 
-             return userBuilder.build();
+            return userBuilder.build();
 
         } else {
             throw new UsernameNotFoundException("No such user: " + username);

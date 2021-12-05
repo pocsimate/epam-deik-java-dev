@@ -1,9 +1,7 @@
 package com.epam.training.ticketservice.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,7 +43,7 @@ public class Screening {
     private LocalDateTime screeningDate;
 
     @Override public String toString() {
-        return movie.getTitle() + " (" + movie.getCategory() + ", " + movie.getLength() + " minutes), screened in room " + room.getName() + ", at " + screeningDate.format(
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        return movie.getTitle() + " (" + movie.getCategory() + ", " + movie.getLength() + " minutes), screened in room "
+                + room.getName() + ", at " + screeningDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 }

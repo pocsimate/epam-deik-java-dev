@@ -36,7 +36,7 @@ public class RoomService {
     }
 
     @Transactional
-    public void createRoom(Room room){
+    public void createRoom(Room room) {
         Optional<Room> optionalRoom = findRoomByName(room.getName());
         if (optionalRoom.isPresent()) {
             throw new RoomAlreadyExistsException(room.getName());

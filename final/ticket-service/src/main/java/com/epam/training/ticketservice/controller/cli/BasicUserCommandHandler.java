@@ -29,7 +29,7 @@ public class BasicUserCommandHandler {
     }
 
     @ShellMethod(value = "Register user", key = "sign up")
-    public String signUp(String username, String password){
+    public String signUp(String username, String password) {
         try {
             cliUserService.registerUser(username, new BCryptPasswordEncoder().encode(password));
             return "Registered successfully";
@@ -40,7 +40,7 @@ public class BasicUserCommandHandler {
 
     // TODO impelement privileged well.
     @ShellMethod(value = "Log user in", key = "sign in")
-    public String signIn(@ShellOption("privileged") boolean privileged, String username, String password){
+    public String signIn(@ShellOption("privileged") boolean privileged, String username, String password) {
 
         if (!Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
             return "Already signed in. Sign out first";
@@ -57,7 +57,7 @@ public class BasicUserCommandHandler {
     }
 
     @ShellMethod(value = "Log user out", key = "sign out")
-    public String signOut(){
+    public String signOut() {
         if (Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
             return "You are not logged in";
         } else {
@@ -67,11 +67,12 @@ public class BasicUserCommandHandler {
     }
 
     @ShellMethod(value = "Get logged in user data", key = "describe account")
-    public String me(){
+    public String me() {
         if (!AuthorityCheckerUtil.isAuthorized()) {
             return "You are not signed in";
         } else {
-            return String.format("Signed in with %s %s", AuthorityCheckerUtil.isAdminAuthorized()? "privileged account" : "account",
+            return String.format("Signed in with %s '%s'",
+                    AuthorityCheckerUtil.isAdminAuthorized() ? "privileged account" : "account",
                     SecurityContextHolder.getContext().getAuthentication().getName());
         }
     }

@@ -21,8 +21,8 @@ public class AdminRoomCommandHandler extends AuthorizedCommand {
 
     @ShellMethodAvailability("isAdminAuthorized")
     @ShellMethod(value = "Create new room", key = "create room")
-    public String createRoom(String name, int numberOfRows, int numberOfColumns){
-        try{
+    public String createRoom(String name, int numberOfRows, int numberOfColumns) {
+        try {
             Room room = Room.builder()
                     .name(name)
                     .numberOfRows(numberOfRows)

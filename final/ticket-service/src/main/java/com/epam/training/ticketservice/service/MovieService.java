@@ -22,7 +22,7 @@ public class MovieService {
         this.movieRepository = movieRepository;
     }
 
-    public Optional<Movie> findMovieByTitle(String title){
+    public Optional<Movie> findMovieByTitle(String title) {
         return movieRepository.findByTitle(title);
     }
 
@@ -36,7 +36,7 @@ public class MovieService {
     }
 
     @Transactional
-    public void createMovie(Movie movie){
+    public void createMovie(Movie movie) {
         Optional<Movie> optionalMovie = findMovieByTitle(movie.getTitle());
         if (optionalMovie.isPresent()) {
             throw new MovieAlreadyExistsException(movie.getTitle());

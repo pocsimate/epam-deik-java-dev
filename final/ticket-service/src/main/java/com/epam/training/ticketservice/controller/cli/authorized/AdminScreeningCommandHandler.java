@@ -35,4 +35,17 @@ public class AdminScreeningCommandHandler extends AuthorizedCommand {
         }
         return "Screening created successfully";
     }
+
+    @ShellMethodAvailability("isAdminAuthorized")
+    @ShellMethod(value = "Delete existing screening", key = "delete screening")
+    private String deleteScreening(String movieTitle, String roomName, String screeningDate) {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime screeningStartDate = LocalDateTime.parse(screeningDate, dateFormat);
+        try {
+            screeningService.deleteScreening(movieTitle, roomName, screeningStartDate);
+        } catch (RuntimeException ex) {
+            return ex.getMessage();
+        }
+        return "Screening deleted successfully";
+    }
 }

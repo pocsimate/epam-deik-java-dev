@@ -14,7 +14,7 @@ import org.springframework.test.context.TestPropertySource;
 @ExtendWith(MockitoExtension.class)
 @DataJpaTest
 @TestPropertySource(
-        locations = "classpath:application-dev.properties")
+        locations = "classpath:application-ci.properties")
 class CliUserRepositoryTest {
 
     @Autowired

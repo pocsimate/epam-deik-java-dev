@@ -9,9 +9,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class AuthorityCheckerUtil {
 
     public static boolean isAdminAuthorized() {
-        if (isAuthorized()){
+        if (isAuthorized()) {
             GrantedAuthority admin = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                    .filter( role -> "ROLE_ADMIN".equals(role.getAuthority()))
+                    .filter(role -> "ROLE_ADMIN".equals(role.getAuthority()))
                     .findAny()
                     .orElse(null);
 
