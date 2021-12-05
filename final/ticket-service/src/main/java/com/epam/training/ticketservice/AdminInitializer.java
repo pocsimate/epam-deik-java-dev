@@ -25,10 +25,12 @@ public class AdminInitializer {
     @PostConstruct
     private void initializeAdmin() {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        CliUser admin = new CliUser();
-        admin.setUsername("admin");
-        admin.setPassword(encoder.encode("admin"));
-        admin.setCliUserRole(CliUserRole.ADMIN);
+        CliUser admin = CliUser.builder()
+                .username("admin")
+                .password(encoder.encode("admin"))
+                .cliUserRole(CliUserRole.ADMIN)
+                .build();
+
         userRepository.save(admin);
     }
 }

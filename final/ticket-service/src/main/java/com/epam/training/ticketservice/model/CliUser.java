@@ -9,8 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "cli_user")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CliUser {
 
     @Id
@@ -28,9 +35,6 @@ public class CliUser {
     public CliUser(String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-    public CliUser() {
     }
 
     public long getId() {

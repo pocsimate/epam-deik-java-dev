@@ -32,10 +32,11 @@ class RoomServiceTest {
 
     @BeforeEach
     void setUp() {
-        testRoom = new Room();
-        testRoom.setName("Test room");
-        testRoom.setNumberOfColumns(10);
-        testRoom.setNumberOfRows(4);
+        testRoom = Room.builder()
+                .name("Test room")
+                .numberOfColumns(10)
+                .numberOfRows(4)
+                .build();
     }
 
     @Test

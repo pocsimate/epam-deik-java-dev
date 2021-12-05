@@ -31,10 +31,11 @@ class CliUserServiceTest {
 
     @BeforeEach
     void setUp() {
-        testUser = new CliUser();
-        testUser.setUsername("test_user");
-        testUser.setPassword("test_user_password");
-        testUser.setCliUserRole(CliUserRole.USER);
+        testUser = CliUser.builder()
+                .username("test_user")
+                .password("test_user_password")
+                .cliUserRole(CliUserRole.USER)
+                .build();
     }
 
     @Test

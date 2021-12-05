@@ -12,7 +12,7 @@ import org.springframework.shell.standard.ShellMethod;
 @ShellComponent
 public class BasicMovieCommandHandler {
 
-    private MovieService movieService;
+    private final MovieService movieService;
 
     @Autowired
     public BasicMovieCommandHandler(MovieService movieService) {

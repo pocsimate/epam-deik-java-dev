@@ -1,8 +1,5 @@
 package com.epam.training.ticketservice.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import com.epam.training.ticketservice.model.Room;
 import com.epam.training.ticketservice.model.Screening;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

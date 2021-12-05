@@ -64,21 +64,21 @@ class ScreeningServiceTest {
     }
 
     public Movie getTestMovie() {
-        Movie movie = new Movie();
-        movie.setId(1);
-        movie.setTitle("Test title");
-        movie.setCategory("Test category");
-        movie.setLength(60);
-        return movie;
+        return Movie.builder()
+                .id(1)
+                .title("Test title")
+                .category("Test category")
+                .length(60)
+                .build();
     }
 
     public Room getTestRoom() {
-        Room room = new Room();
-        room.setId(1);
-        room.setName("Test room");
-        room.setNumberOfColumns(5);
-        room.setNumberOfRows(5);
-        return room;
+        return Room.builder()
+                .id(1)
+                .name("Test room")
+                .numberOfColumns(5)
+                .numberOfRows(5)
+                .build();
     }
 
     @Test
@@ -96,7 +96,8 @@ class ScreeningServiceTest {
         Mockito.verify(screeningRepository, Mockito.times(1)).save(Mockito.any());
     }
 
-    @Test void testCreateScreeningShouldThrowOverlappingScreeningExceptionWhenFullyOverlaps() {
+    @Test
+    void testCreateScreeningShouldThrowOverlappingScreeningExceptionWhenFullyOverlaps() {
         // Given
         BDDMockito.given(roomService.getRoomIfExists(testRoom.getName())).willReturn(testRoom);
         BDDMockito.given(movieService.getMovieIfExists(testMovie.getTitle())).willReturn(testMovie);
@@ -112,7 +113,8 @@ class ScreeningServiceTest {
         Assertions.assertEquals(expectedMessage, ex.getMessage());
     }
 
-    @Test void testCreateScreeningShouldThrowOverlappingScreeningExceptionWhenOverlapsInBreakTime() {
+    @Test
+    void testCreateScreeningShouldThrowOverlappingScreeningExceptionWhenOverlapsInBreakTime() {
         // Given
         dbScreening.setScreeningDate(dbScreening.getScreeningDate().minusMinutes(15));
 
@@ -140,5 +142,19 @@ class ScreeningServiceTest {
 
         // Then
         Assertions.assertTrue(screeningList.isEmpty());
+    }
+
+    @Test
+    void testDeleteScreeningShouldDeleteTheScreeningWhenItExists() {
+        // Given
+        BDDMockito.given(roomService.getRoomIfExists(testRoom.getName())).willReturn(testRoom);
+        BDDMockito.given(movieService.getMovieIfExists(testMovie.getTitle())).willReturn(testMovie);
+        Mockito.doNothing().when(screeningRepository).deleteByParams(testMovie, testRoom, dbScreening.getScreeningDate());
+
+        // When
+        screeningService.deleteScreening(testMovie.getTitle(), testRoom.getName(), dbScreening.getScreeningDate());
+
+        // Then
+         Mockito.verify(screeningRepository).deleteByParams(testMovie, testRoom, dbScreening.getScreeningDate());
     }
 }

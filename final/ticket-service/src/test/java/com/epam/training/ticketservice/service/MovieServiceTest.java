@@ -33,10 +33,11 @@ class MovieServiceTest {
 
     @BeforeEach
     void setUp() {
-        testMovie = new Movie();
-        testMovie.setTitle("Test Movie");
-        testMovie.setCategory("test category");
-        testMovie.setLength(60);
+        testMovie = Movie.builder()
+                .title("Test Movie")
+                .category("test category")
+                .length(60)
+                .build();
     }
 
     @Test
